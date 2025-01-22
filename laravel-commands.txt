@@ -1,0 +1,2526 @@
+Interview :-
+
+1 :- If blade is not use then file is working?
+Ans :- Yes definitaily.
+2 :- What is MVC?
+Ans :- Model View Controller :- MVC is software design pattern to develop reliable software application. We can use this pattern with any programming language.
+	1. Model :- Write business logics and database commnucation.
+	2. View :- User interface (Code we write to display on UI).
+	3. Controller :- Handle user interaction and select a view to render. communicate model, and view.
+3 :- Use of composer file?
+Ans :- Composer.json file is most important file of laravel project. In this file store all the details and dependences of project.
+4 :- Where is store dependences?
+Ans :- All the dependences details are stored inside the composer.json file. But all the dependences are stored inside the vendor folder.
+5 :- Use of ENV file?
+Ans :- ENV file :- Envorment file in this file we store the scret key, database connectivity etc.
+6 :- Model, Controller, View file where is stored?
+Ans :-
+7 :- We push the vendor folder into the git, If yes then why or Not then why?
+Ans :- No, we don't push the vendor folder into the git because it's to heavy. When the developer is clone the project from the git and work on it. Then developer run the composer update command and all the dependences are installed from the composer.json file automatically.
+
+8 :- What is routing?
+Ans :- Routing is a path of opening the webpage. Or URL of opening a file.
+       In the laravel some advance feature of rounting. Remove the file extension. Showing the path with deferent name.
+9 :- How to make route?
+Ans :- 1. Route::get("/home", function(){
+    		return view('home');
+	});
+	2. Route::view('/home','file_name');
+	3. Pass the dynamic url data into the route.
+	Route::get("/about/{name}", function($name){
+    		echo $name;
+    		return view("about");
+		}); 
+10 :- Open view with routing?
+Ans :-
+11 :- Pass the data with routing?
+Ans :- Pass the dynamic url data into the route.
+	Route::get("/about/{name}", function($name){
+    		echo $name;
+    		return view("about");
+12 :- Anchor Tag?
+Ans :- <a href="/">Goto Welcome page</a>
+13 :- Redirect with routing?
+Ans :- Route::redirect("/home", "main_route_name");
+14 :- Rounting method?
+Ans :- 	1. Route::get($url, $callback);
+		2. Route::post($url, $callback);
+		3. Route::put($url, $callback);
+		4. Route::patch($url, $callback);
+		5. Route::delete($url, $callback);
+		6. Route::options($url, $callback);
+15 :- What is Controller ?
+Ans :- Controller comes under MVC arthitecture. The controller handle request from user.
+		1. Display view.
+		2. Handle database
+		Controller is central unit that handles user request. model and views.
+16 :- How to make controller?
+Ans :- Using the command line we make a controller but we make with custom code. Goto app>>http folder
+		and create a controller.
+		Command Line :- php artisan make:controller Controller_Name 
+17 :- Call controller with routes?
+Ans :- In the web.php file Add this code :- use App\Http\Controllers\UserController;
+		Make route :- Route::get('route_name', [Controller_name::class,'function_name']);
+					  Route::get('user', [UserController::class,'getUser']);
+18 :- Pass the data from Route to controller?
+Ans :-
+		Controller file :- 	function getUserName($name){
+								return "Welcome user ".$name;
+							}
+		web.php file :- Route::get('user/{name}', [UserController::class,'getUserName']);
+19 :- Call view with Controller?
+Ans :- Controller file :- 	function getUserName($name){
+								//return "Welcome user ".$name;
+								return view('getUser', ['name' => $name]);
+							}
+		web.php :- Route::get('user/{name}', [UserController::class,'getUserName']);
+20 :- Call view which is under a nested folder?
+Ans :- 	web.php :- /* Route::get('admin', function(){
+						return view('admin.login');
+					}); */
+
+					Route::get('admin', [UserController::class,'adminLogin']);
+		Controller file :- 	function adminLogin(){
+								return view("admin.login");
+							}
+21 :- Interview questions?
+Ans :- 
+
+Part 10 :- View in Laravel
+
+22 :- What is view?
+Ans :- The view containers the UI part of project. Add which that directly visiable for users.
+
+23 :- How to make view?
+Ans :- Mannual we can make view. 
+
+24 :- How to make view with command line?
+Ans :- The second way is create view with command line :- 	php artisan make:view file_name
+															php artisan make:view create_view
+
+25 :- Call view from route and controller?
+Ans :- web.php :- 	Route::view("/route_name", "file_name");
+		Controller file :- 	function adminLogin(){
+								return view("admin.login");
+							}
+26 :- Make nested view and call?
+Ans :- 	Using command line :- 	php artisan make:view folder_name.file_name
+								php artisan make:view admin.login
+
+		web.php :- 	Route::get('admin', function(){
+						return view('admin.login');
+					});
+		controller :- 	function adminLogin(){
+							return view("first_folder.second_folder.file_name");
+						}
+						function adminLogin(){
+							return view("admin.login");
+						}
+
+27 :- How to know view exits or not?
+Ans :- Controller file :- 	use Illuminate\Support\Facades\View; // To check the view is exits or not.
+							if(View::exists("admin.login")){
+								return view("admin.login");
+							}else{
+								echo "View is not exits";
+							}
+
+28 :- Pass data in view?
+Ans :- web.php :- Route::view("route_name/{parameter_name},'file_name');
+
+28 :- Interview question?
+Ans :- 
+
+11 :- Blade template in Laravel.
+
+1 :- What is blade template?
+Ans :- 	Blade is a simple, yet powerful templating engine for executing PHP code. This is including
+		in laravel framework. 
+		The template engine is a module or tool for executing code.
+		Blade templage is module/tool for execute the PHP code. 	 
+
+2. Why we do need blade templage?
+Ans :- 	Blade is faster then normal PHP code executor. Code of view file of laravel mantain in the cache.
+
+3. Expression of blade template?
+Ans :- The expression of blade very simple. {{}} This double curly braces is a blade template
+		expression.
+
+4. Display variables?
+Ans :- Using the blade expression {{}} we display the variable :- {{$user}}
+
+5. Execute function?
+Ans :- <p>{{rand()}}</p>
+
+6. If else?
+Ans :- In the blade file :- 
+							@if($user == 'Gurjeet Singh')
+								<h2>This is {{$user}}</h2>
+							@elseif($user == "Singh")
+								<h2>This is Singh</h2>
+							@else
+								<h2>No name found</h2>
+							@endif
+
+7. For loop?
+Ans :- In the blade file :-  
+							@for($i = 0; $i <= 3; $i++)
+								<h6>{{$i}}</h6>
+							@endfor
+
+8. Foreach loop?
+Ans :- In the blade file :-
+							@foreach($users as $userName)
+								<h6>{{$userName}}</h6>
+							@endforeach
+9. Interview questions?
+Ans :- 
+
+Part 12 :- Including sub view in Laravel
+
+1 :- What is sub view?
+Ans :- Sub view is include the view inside the another that is called subview.
+2. Make sub view?
+Ans :- Using the command line make sub view :- 	php artisan make:view folder_name.file_name	
+												php artisan make:view common.inner
+3. Use subview?
+Ans :- @include('common.header');
+4. Pass the data from view to subview?
+Ans :- @include('common.inner', ['page' => 'This about page']); 
+		Showing the data in the common file.
+		{{$page}}
+5. Check if sub view is exists?
+Ans :- 	Add the If after the @include function for check the sub view is exists or not.
+		@includeIf('common.inner', ['page' => 'This about page'])
+6. Interview questions?
+Ans :- 
+
+Part 13 :- Component in Laravel
+
+1 :- What is components?
+Ans :- A piece of code that can reuse in our project. Like function is written once and use again and again. We can written components and reuse again and again.
+
+2 :- How to make components?
+Ans :- Using the command line we create a components.
+		Command :- php artisan make:component message-banner
+		Two folder and files created using this commands:-
+		1. app>view\component>file_name.php
+		2. resource>views>component>file_name.blade.php
+3 :- How to use components?
+Ans :- Add the components into the file :- <x-component_name />
+								Example :- <x-message-banner />
+4 :- How to pass data in components?
+Ans :- <x-message-banner msg='User login Successfully'/> // For calling a components with variable.
+		and pass the variable inside the another file where you want call the component {{$msg}}.
+		And goto the app>views>component>message-banner.php file and declared the public $msg variable
+		and passed into the constructor. And Goto the resource>views>component>message-banner.blade.php
+		and use this variable for component like this :-  <span class='{{$class}}'>{{$msg}}</span> and this
+		showing where we call the components.
+
+		Same we pass the class for styling and used it.
+
+5 :- Example of components?
+Ans :-
+
+6 :- Interview question?
+Ans :- 
+	
+	Code of component :-
+	message-banner.php
+	<?php
+
+		namespace App\View\Components;
+
+		use Closure;
+		use Illuminate\Contracts\View\View;
+		use Illuminate\View\Component;
+
+		class message-banner extends Component
+		{
+			public $msg;
+			public $class;
+			/**
+			* Create a new component instance.
+			*/
+			public function __construct($msg, $class)
+			{
+				//
+				$this->msg = $msg;
+				$this->class = $class;
+			}
+
+			/**
+			* Get the view / contents that represent the component.
+			*/
+			public function render(): View|Closure|string
+			{
+				return view('components.message-banner');
+			}
+		}
+
+	message-banner.blade.php
+	<div>
+    	<span class='{{$class}}'>{{$msg}}</span>
+	</div>
+
+
+Part 14 :- Form and input fields
+
+1. Make View and Route for view?
+Ans :- php artisan make:view userForm
+
+2. Make a form and input fields?
+Ans :- <form action="add-user" method="post">
+        @csrf <!-- To add this for laravel security reasons beacuse this make a security token -->
+        <div class="input-wrapper">
+            <input type="text" name="userName" placehoder="Enter user name" >
+        </div>
+        <div class="input-wrapper">
+            <input type="text" name="email" placehoder="Enter user email" >
+        </div>
+        <div class="input-wrapper">
+            <input type="text" name="city" placehoder="Enter user city" >
+        </div>
+        <div class="input-wrapper">
+            <button>Add new User</button>
+        </div>
+    </form>
+
+3. Make controller?
+Ans :- php artisan make:controller addUser;
+		
+
+4. Make form submit route?
+Ans :- 	Route::view("user-form","userForm");
+		Route::post('add-user', [UserController::class, 'addUser']);	
+
+5. Get form input fields data?
+Ans :- function addUser(Request $req){
+			//return $req;
+			echo $req->userName;
+			echo $req->email;
+			echo $req->city;
+		}
+
+6. Interview questions?
+1 :- If we have get the 419 error. So what we can do?
+Ans :- Pass the @csrf inside the form.
+2. Get and Post request differnec?
+Ans :-
+3. How to hit the url from the form?
+Ans :- Pass the method name inside the form action attribute.
+
+Part :- 15 Form inputs part 2
+
+1 :- Make view and it's routes?
+Ans :- 	Route :- Route::view('user-form-2', 'userForm-2');
+		View :- php artisan make:view userForm-2 
+
+		Route::view('user-form-2', 'userForm-2');
+		Route::post('add-user-2', [UserController::class, "addUser2"]);
+2 :- Make checkbox?
+Ans :-  <input type="checkbox" name="skill"  value="PHP" id="php">
+        <label for="php">PHP</label>
+        <input type="checkbox" name="skill"  value="node" id="node">
+        <label for="node">Node</label>
+
+3. Make radio button?
+Ans :- 	<input type="radio" name="gender"  value="male" id="male">
+        <label for="male">Male</label>
+        <input type="radio" name="gender"  value="female" id="female">
+        <label for="female">Female</label>
+
+4 :- Make range?
+Ans :- <input type="range" name="age" id="" min="18" max="50">
+
+5 :- Make Drop down and get value?
+Ans :-  <select name="" id="">
+            <option value="delhi">Delhi</option>
+            <option value="noida">Nodia</option>
+            <option value="chandigarh">Chandigarh</option>
+        </select>
+
+6 :- Interview question?
+Ans :- 
+
+Full Code :-
+
+UserController.php :- 
+						function addUser2(Request $req){
+							//return $req;
+							echo $req->city."<br>";
+							echo $req->age."<br>";
+							echo $req->gender."<br>";
+							print_r($req->skill);
+						}
+web.php :- 	Route::view('user-form-2', 'userForm-2');
+			Route::post('add-user-2', [UserController::class, "addUser2"]);
+
+userForm-2.php :-
+					<div>
+						<h2>Add new User 2</h2>
+						<form action="add-user-2" method="post">
+							@csrf
+							<div>
+								<h4>User Skills</h4>
+								<input type="checkbox" name="skill[]"  value="PHP" id="php">
+								<label for="php">PHP</label>
+								<input type="checkbox" name="skill[]"  value="node" id="node">
+								<label for="node">Node</label>
+								<input type="checkbox" name="skill[]"  value="java" id="java">
+								<label for="java">Java</label>
+							</div>
+							<div>
+								<h4>Gender</h4>
+								<input type="radio" name="gender"  value="male" id="male">
+								<label for="male">Male</label>
+								<input type="radio" name="gender"  value="female" id="female">
+								<label for="female">Female</label>
+							</div>
+							<div>
+								<h4>City</h4>
+								<select name="city" id="">
+									<option value="delhi">Delhi</option>
+									<option value="noida">Nodia</option>
+									<option value="chandigarh">Chandigarh</option>
+								</select>
+							</div>
+							<div>
+								<h4>Age</h4>
+								<input type="range" name="age" id="" min="18" max="50">
+							</div>
+							<button>Add new user</button>
+						</form>
+					</div>
+
+
+Part :- 16 Form validation
+
+1 :- Apply validation for Form?
+Ans :- UserController.php :- 
+							function userForm_Validation(Request $req){
+								//return $req;
+								$req->validate([
+									"userName" => 'required | min:3 | max:10',
+									"email" => 'required | email',
+									"city" => 'required | max:20',
+									"skill" => 'required',
+								]);
+								return $req;
+							}
+
+2 :- Display message?
+Ans :- 	userFormValidation.blade.php
+		<!-- {{print_r($errors)}} To check all the errors using $errors -->
+		<!--  @if($errors->any())
+				@foreach($errors->all() as $error)
+					<div>
+						{{$error}}
+					</div>
+				@endforeach
+			@endif -->
+			
+3 :- Display message with input fields?
+Ans :- 	userFormValidation.blade.php
+		<span class="error">@error('userName'){{$message}}@enderror</span>
+
+4 :- Interview questions?
+Ans :- 
+
+Part :- 17 Advance validation Part 2
+
+1 :- Make a custom error?
+Ans :- UserController.php file :-  
+						// Custom validation
+							function userForm_CustomValidation(Request $req){
+								//return $req;
+								$req->validate([
+									"userName" => 'required | min:3 | max:10',
+									"email" => 'required | email',
+									"city" => 'required | max:20',
+									"skill" => 'required',
+								],[
+									"userName.required" =>"User name can't be empty",
+									"userName.min" =>"User name should be min 3 charactor",
+									"userName.max" =>"User name max limit of 10 charactor",
+									"email.required" => "The email should be a valid email address",
+									"city.required" => "City is required for other state students",
+									"skill.required" => "Select at least one skill"
+
+								]);
+								return $req;
+							}
+
+2 :- Get old value?
+Ans :-	userFormCustomValidation.blade.php
+		Using the old() function inside the input>>value attribute we can get old value.
+
+3 :- Change input color if invalid?
+Ans :- userFormCustomValidation.blade.php :-
+		Add the this code inside the input attribute class="{{$errors->first('userName')?'input-error':''}}"
+		This is a custom class declared using the laravel and 
+		Add css :- .input-error{
+						border:1px solid red;
+						color : red;
+					}
+
+4 :- Published validation file?
+Ans :- The requird message is coming from validation.php file. By default this file is not visiable
+		inside the laravel project.
+		You run this command inside the terminal for visiable the file :-
+		php artisan lang:publish
+		When you run this command then another folder is visible name 'lang' and inside this the 
+		validation.php file is avaliable and you change the any message inside this file.
+
+
+5 :- Interview questions?
+Ans :- 
+
+Part :- 18 Make own validation rules
+
+1 :- What is the validation rules?
+Ans :- Inside the laravel we apply the validation like required,min etc this is called rules.
+
+2 :- Make custome rule?
+Ans :- 	Make own custom rules inside the laravel that not avaliable inside the laravel.
+		Using the command line make a rule :- php artisan make:rule Uppercase
+		This command is create a Rules folder and inside this folder automatically Uppercase file is
+		created.
+
+3 :- Apply custom rule?
+Ans :- Inside the Rules>>Uppercase.php file :-
+
+		class Uppercase implements ValidationRule
+		{
+			/**
+			* Run the validation rule.
+			*
+			* @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+			*/
+			public function validate(string $attribute, mixed $value, Closure $fail): void
+			{
+				// This is custom validation rules we make it.
+				if(strtoupper($value) != $value){
+					$fail('the :attribute must be in uppercase');
+				}
+			}
+		}
+
+4 :- Update custom rule message?
+Ans :-  UserController.php file :-
+
+		function userForm_CustomValidation(Request $req){
+			//return $req;
+			$req->validate([
+				"city" => 'required | max:20 | Uppercase',
+			],[ 
+				// You can create your own custom message
+				"city.required" => "City is required for other state students",
+				"city.Uppercase" => "Please write the word in uppercase",
+			]);
+			return $req;
+		}
+
+5 :- Interview questions?
+Ans :-
+
+Part :- 19 URL Generation
+
+1 :- What is URL generation?
+Ans :- 	This is laravel feature with the help of this we Routing, Links and Url work are easily 
+		perform.
+
+2 :- Get current URL?
+Ans :-  homeUrlGeneration.blade.php
+		1 :- {{URL::current()}}  <!-- For get the current URL -->
+    	2 :- {{URL::full()}} <!-- Get the full url form the web browser like :-  http://127.0.0.1:8000/home-url-generation?name=gurjeet -->
+		3 :- {{url()->current()}} <!-- This method is alternative of URL:: -->
+
+3 :- Get full URL?
+Ans :- {{URL::full()}} <!-- Get the full url form the web browser like :-  http://127.0.0.1:8000/home-url-generation?name=gurjeet -->
+
+4 :- Get previous URL?
+Ans :- homeUrlGeneration.blade.php
+		1 :- {{URL::previous()}} <!-- Get the previous url of the page -->
+
+5 :- Make link url?
+Ans :- 	Simple link :- <a href="/about-url-generation"> About URL</a>
+		Make link using laravel :- <a href="{{URL::to('about-url-generation')}}"> About URL</a>
+
+6 :- Make URL with child path?
+Ans :- <a href="{{URL::to('about-url-generation', ['gurjeet'])}}"> Child Url :- {{URL::to('about-url-generation', ['gurjeet'])}}</a>
+		Output :- http://127.0.0.1:8000/about-url-generation/gurjeet
+
+7 :- Interview questions?
+Ans :-
+
+Part 20 :- Named routes
+
+1 :- What is named routes?
+Ans :- This is a laravel feature in this we define the route name. Many times the path of routes
+		is long and very complex. So we use the named routes.
+
+2 :- How to make a named route?
+Ans :- Define the name route with 'name('route_name')'
+		Example :- Route::view('home/profile/data','home')->name('hm');
+		When declared the name route. So we use in the url like :- http://127.0.0.1:8000/hm
+
+3 :- How to use the named route from view?
+Ans :- <a href="{{route('hm')}}">Name Route</a>
+
+4 :- How to use the named route form controller?
+Ans :- function showNameRoute(){
+        //return view('homeNameRoute20');
+        // Redirect to the page
+        //return redirect()->to('home/profile/user');
+        // But this for name Route main function
+        return to_route("hm");
+    }
+
+5 :- How to pass params in name routes?
+Ans :- wb.php :-
+				Route::view('home/profile/{name}','homeNameRoute20')->name('snr');
+				Route::get('snr',[UserController::class, 'showNameRouteParams']);
+		UserController.php :-
+							// User parameter
+							function showNameRouteParams(){
+								return to_route('snr',['name' => 'gurjeet']);
+							}
+
+6 :- Interview questions?
+Ans :-
+
+Part 21 :- Routing Group with Prefix
+
+1 :- What is routing grouping with prefix?
+Ans :- Prefix :- for example we have a route :- Route::get('student/home',[UserController::class,'function_name']);
+		The 'student' is prefix in the routes. So if we have multiple routes with same prefix like
+		'student'. Then we put this routes inside the function. In this function we mention the prefix. This prefix automatically apply inside the routes.
+
+		We have make route grouping with 3 ways.
+		1. prefix route grouping.
+		2. controller route grouping.
+		3. middleware route grouping.
+
+
+2 :- Make some routes for view and controller?
+Ans :- View :- routeGrouping21.blade.php
+		Controller :- 	function showRouteGroup(){
+							return 'Show student';
+						}
+
+						function showRouteGroup2(){
+							return 'Add student';
+						}
+
+3 :- Make group of routes?
+Ans :- With the help of prefix() and group() function we make a group routing.
+		web.php :- 
+					Route::prefix('student/')->group(function(){
+						Route::view('route-group','routGrouping21');
+						Route::get('show-route-group',[UserController::class,'showRouteGroup']);
+						Route::get('show-route-group2',[UserController::class,'showRouteGroup2']);
+					});
+4 :- Interview questions?
+Ans :- 
+
+Part 22 :- Route group with controller
+1 :- What is route grouping with controller?
+Ans :- We have make a route with controller name. But we have 50 route and we declared controller 
+		every time in the route. So we make a controller group route one time and this is use with 
+		every route this is route group controller.
+		Example :- 
+					Route::get('show-route-group',[UserController::class,'showRouteGroup']);
+
+2 :- Make some route for controller?
+Ans :- web.php
+		/* Route::get('show-student',[StudentController::class,'showStudent']);
+		Route::get('add-student',[StudentController::class,'addStudent']);
+		Route::get('delete-student',[StudentController::class,'deleteStudent']); */
+
+
+
+3 :- Make some group route for controller?
+Ans :- 	We make group route with this syntax :- 
+			Route::controller(controller_name)->group(function(){
+				Route::get('route_name','controller_function_name');
+			});
+
+		web.php
+			Route::controller(StudentController::class)->group(function(){
+				Route::get('show-student','showStudent');
+				Route::get('add-student','addStudent');
+				Route::get('delete-student','deleteStudent');
+				// Pass the parameter with route.
+				Route::get('delete-student/{name}','aboutStudent');
+			});
+
+4 :- Interview questions?
+Ans :- 
+
+Part :- 23 Middleware in Laravel
+
+1 :- What is middleware?
+Ans :- Middleware is layer between user and laravel application. Here we can check condition and 
+filter user requests. If condition pass request will reach to middleware.
+Types of condition :- 1. If we check the user login in every page the we declared the middleware this 
+check the condition is true the other routes are runs.
+						2. Your web site is run globally and you want to check the IP address of spacific country then we use the middleware and run the web site.
+
+2 :- Type of middleware?
+Ans :- Three types of middleware.
+		1. Global middleware :- This apply for hole application.
+		2. Route middleware :- We can apply the middleware in spacific route like we apply middleware for
+								10 routes only.
+		3. Group middleware :- In this middleware we create a group of middleware. And add the routes.
+
+3 :- Make middleware?
+Ans :- We make middleware using the command :- php artisan make:middleware middleware_name
+		Goto the App >> http >> middleware folder. The middleware is avaliable here.
+4 :- Apply middleware?
+Ans :- 
+		1 :- Go to the boostrap folder >> app.php file >> Import the middleware :- copy the App\Http\Middleware; code
+from namespace line and past it into the app.php file with middleware name :- use App\Http\Middleware\ageCheck;. And add the $middleware->append(middleware_name::class);;
+
+5 :- Filter requiest with middleware?
+Ans :- Goto the URL and pass the parameter with value like this :- http://localhost:8000/aboutMiddleware?age=2
+		And goto the middleware file and add the condition.
+		middleware >> ageCheck.php
+		public function handle(Request $request, Closure $next): Response
+		{
+
+			//echo "From age check middleware";
+			if($request->age < 18){
+				die("You can't visit the site");
+			}
+			return $next($request);
+		}
+
+6 :- Interview questions?
+Ans :- 
+
+
+Part :- 24 Middleware Group
+
+1 :- What is middleware group?
+Ans :- We can apply middleware group with single route, group route, all route. The middleware group 
+		is make a group of middleware that can be apply with routes.
+
+2 :- How to register in middleware group?
+Ans :-
+		Goto boostrap folder >> app.php >> 
+		/* Register Group middleware */
+		use App\Http\Middleware\ageCheckGroupMiddleware;
+		use App\Http\Middleware\countryGroupMiddleware;
+
+		->withMiddleware(function (Middleware $middleware) {
+        // Global middleware
+        //$middleware->append(ageCheck::class);
+
+        // Make a group middleware
+        $middleware->appendToGroup('check1', [ageCheckGroupMiddlewareCheck::class, countryGroupMiddleware::class]);
+    })
+
+3 :- Apply a group middleware to route group?
+Ans :-	Example :- 	Route::middleware('middleware_name')->group(function(){
+
+					});
+
+			Route::middleware('check1')->group(function(){
+				Route::view('about','about');
+				Route::view('contact','contact');
+				Route::view('list','list');
+				Route::view('home','home');
+			});
+
+4 :- Apply a group middleware to single route?
+Ans :- 	Goto >> web.php file :- Route::view('homeGroupMiddleware', 'homeGroupMiddleware')->middleware('check1');
+		Url :- http://localhost:8000/homeGroupMiddleware?country=india&age=20
+
+		Goto middleware folder and open the middleware files and add the conditions according your requirments.
+
+5 :- Interview question?
+Ans :-
+
+Part :- 25 Assigning middleware to routes.
+
+1 :- Make middleware?
+Ans :- php artisan make:middleware ageCheckAssigneMiddleware
+
+2 :- Make routes?
+Ans :- To register the middleware directly to web.php file.
+		/* Assigning middleware to routes */
+		use App\Http\Middleware\ageCheckAssigneMiddleware;
+
+3 :- Apply middleware on the route?
+Ans :- 	web.php
+		Route::view('homeAssignMiddleware', 'homeAssignMiddleware')->middleware(ageCheckAssigneMiddleware::class);
+
+
+4 :- Apply multiple middleware on the route?
+Ans :- 	web.php
+		Route::view('aboutAssignMiddleware', 'aboutAssignMiddleware')->middleware([ageCheckAssigneMiddleware::class, countryAssigneMiddleware::class]);
+
+
+5 :- Interview question?
+Ans :- 
+
+Part :- 26 Connect to mysql database
+
+1 :- Make database?
+Ans :- Goto phpmyadimin and make a database like :- laravel etc.
+
+2 :- Update ENV file?
+Ans :- 	This is without migration.
+		Goto the env file and connect the database :- 	DB_CONNECTION=mysql
+														DB_HOST=127.0.0.1
+														DB_PORT=3306
+														DB_DATABASE=laravel // database name
+														DB_USERNAME=root
+														DB_PASSWORD=
+		When we run the project then this error is showing :-
+		SQLSTATE[42S02]: Base table or view not found: 1146 Table 'laravel.sessions' doesn't exist
+
+		To resolve the error :- Goto the env file :- 	SESSION_DRIVER=file // Remove the database and write the file
+														SESSION_LIFETIME=120
+														SESSION_ENCRYPT=false
+														SESSION_PATH=/
+														SESSION_DOMAIN=null
+
+
+
+3 :- Run migration?
+Ans :- Command :- php artisan migrate
+
+4 :- Make controller and route?
+Ans :- 	Make controller :- php artisan make:controller UserDatabaseController
+		Make route :- Route::get('usersDatabase',[UserDatabaseController::class,'userDatabase']);
+
+
+5 :- Get data from database?
+Ans :- UserDatabaseController.php :-
+									/* Add database directly to controller */
+									use Illuminate\Support\Facades\DB;
+
+									function userDatabase(){
+											//return "User database series";
+											return DB::select('select * from users');
+										}
+
+6 :- Connect to db without migration?
+Ans :- 	Make a database and table. Add the data in the table.
+		Goto the env file :- 	SESSION_DRIVER=file // Remove the database and write the file
+								SESSION_LIFETIME=120
+								SESSION_ENCRYPT=false
+								SESSION_PATH=/
+								SESSION_DOMAIN=null
+
+7 :- Interview questions?
+
+Part :- 27 Display DB data on UI
+
+1 :- Make view?
+Ans :- php artisan make:view userDataDisplayDatabase
+
+2 :- Call view and controller?
+Ans :- Controller file :-
+							function userDatabase(){
+								return view('userDataDisplayDatabase');
+							}
+
+
+3 :- Pass the data from controller to view?
+Ans :- Controller file :-
+							function userDatabase(){
+								//return "User database series";
+								//return DB::select('select * from users');
+								$users = DB::select('select * from users');
+								return view('userDataDisplayDatabase', ['users' => $users]);
+							}
+
+4 :- Use forach loop for display data?
+Ans :- View file :- 
+					  	@foreach($users as $user)
+							<tr>
+										<td>{{$user->id}}</td>
+										<td>{{$user->name}}</td>
+										<td>{{$user->email}}</td>
+										<td>{{$user->password}}</td>
+							</tr>
+						@endforeach
+
+
+5 :- Interview questions?
+Ans :- 
+
+
+Part :- 28 Eloquent Model in Laravel
+
+1 :- What is model?
+Ans :- Model is a part of MVC arthitecture. In laravel we have an Object relational mapper (ORM) feature. Is also called Eloquent. With help of these we perform easly any task of related database. 
+
+	Use of Eloquent Model :- Eloquent is basically use for database insert, update, delete and Get the data	from table etc. 
+2 :- Make a table in the database?
+Ans :- Goto phpmyadimin and make a table inside the database.
+
+3 :- Check the Env file configuration?
+Ans :- Add the database details inside this file.
+
+4 :- Make controller?
+Ans :- php artisan make:controller controller_name.
+
+5 :- Make model?
+Ans :- php artisan make:model model_name // To remember the model and table name are same.
+
+6 :- Make view?
+Ans :- php artisan make:view view_name
+
+7 :- Get the data from the database?
+Ans :- Controller file get data :- Registered the model name inside the controller.
+									$students = \App\Models\Student::all();
+
+8 :- Pass the data to view and display data?
+Ans :- Controller file :-
+							function getStudents(){
+								$students = \App\Models\Student::all(); // Get the all data from table.
+								//return $students;
+								return view('studentsModelView',['students' => $students]);
+							}
+
+9 :- Make function in model and use it?
+Ans :- 
+		If the model is different from table then we going to model file and write a code.
+		Model file :- 	class Student extends Model
+						{
+							use HasFactory;
+							protected $table = 'table_name';
+						}
+		This will use different table inside the different model file.
+10 :- Interview questions?
+Ans :-
+
+Part :- 29 Inspecting Models
+
+1 :- What is Inspecting model?
+Ans :- When our model is linked with database table. With help of Inspecting model feature we get all the information about the table.
+
+2 :- How to used it?
+Ans :- Command run this command all the information about the table are showing.
+		php artisan model:show table_name
+
+3 :- Check the DB table?
+Ans :- If the database connected and model name and table name is not associate. then these command is not worked.
+	Benifits :- When the project is live and you don't have database details or going to database >> table >> operation and check the details. Better you run this command and get the information about the table.
+
+4 :- Interview questions?
+Ans :- 
+
+Part :- 30 Http client?
+
+1 :- What is http client?
+Ans :- This laravel feature and this is called API into the laravel.
+
+2 :- Make controller, model and view?
+Ans :-
+	UserHttpController.php :-
+	 /* This used for http request and API */
+		use Illuminate\Support\Facades\Http;
+		class UserHttpController extends Controller
+
+    //
+    class UserHttpController extends Controller
+	{
+		//
+		function getHttpUser(){
+			$response = Http::get('https://jsonplaceholder.typicode.com/users/1');
+			/* return $response->body(); // Get the body of data.
+			return $response->status(); // Get the status like 200/404 etc.
+			return $response->headers(); // Get the headers. */
+			$response = $response->body();
+			return view('userHttpView',['response' => json_decode($response)]);
+		}
+	}
+
+	userHttpView.blade.php :-
+		<div>
+			<h1>Http User Data</h1>    
+			<!-- {{print_r($response)}} -->
+			<ul>
+				<li>
+					<span>Name :- <span><b>{{$response->name}}</b></span></span>
+				</li>
+				<li>
+					<span>User Name :- <span><b>{{$response->username}}</b></span></span>
+				</li>
+				<li>
+					<span>Email :- <span><b>{{$response->email}}</b></span></span>
+				</li>
+				<li>
+					<span>Website :- <span><b>{{$response->website}}</b></span></span>
+				</li>
+				<li>
+					<span>Phone no :- <span><b>{{$response->phone}}</b></span></span>
+				</li>
+			</ul>
+		</div>
+
+3 :- How to use http client?
+Ans :- 	function getHttpUser(){
+			$response = Http::get('https://jsonplaceholder.typicode.com/users/1');
+			/* return $response->body(); // Get the body of data.
+			return $response->status(); // Get the status like 200/404 etc.
+			return $response->headers(); // Get the headers. */
+			$response = $response->body();
+			return view('userHttpView',['response' => json_decode($response)]);
+		}
+
+4 :- Call API with http client?
+Ans :- API :- Application Protocol Interface .
+		API can pass the datafrom :- 	1 programme to other.			
+									 	1 framework to other.
+										1 Project to other.
+		API has JSON format data.
+5 :- Interview questions?
+Ans :-
+
+Part 31 :- Install Laravel with Herd.
+
+1 :- What is herd?
+Ans :- Herd is a laravel tool. When we install a laravel. Before install laravel we install PHP, composer, xammp. But we install a Herd this will install everything automatically. We don't need any command run in commandline. When we create laravel project this will install without commandline using the herd tool.  
+
+
+2 :- Install Herd?
+Ans :- Goto the laravel offical website and installed the herd.
+
+3 :- Install Laravel Project?
+Ans :- Goto the Herd dashboard and create a laravel project.
+
+4 :- Test installed Project?
+Ans :- Run the project into the browser.
+
+5 :- Make changes in file?
+Ans :- Change the file of welcome.blade.php file.
+
+6 :- Interview questions?
+1 :- Disadvantages of Herd?
+Ans :- In the herd mysql setup is paid.
+
+Part :- 32 Eloquent model : query builder
+
+1 :- What is Eloquent model query builder?
+Ans :- When we use the query builder with model class. This is called a Eloquent  query builder. When we use the query builder with database class we called this Database query builder.
+
+2 :- Get data from DB with query builder?
+Ans :-
+
+3 :- Make queeries like where, get first etc.
+Ans :-
+
+4 :- Insert data?
+Ans :-
+
+5 :- Update data?
+Ans :-
+
+6 :- Delete data?
+Ans :- 
+
+7 :- Interview questions?
+1 :- How to false the time stamps
+Ans :- Goto the model file and add this code inside the function.
+		public $timestamp = false;
+
+Part :- 33 Laravel Route methods
+
+1 :- What is route?
+Ans :- When access the controller, page with help of url that's called the route.
+
+2 :- Route methods name?
+Ans :- 	1 :- get() :- This method is used when we load the page. 
+			 	Defined :- Route::get('route_name', controller_name, function_name); 
+		2 :- post() :- Post method is mostly used when we store the data intothe database etc.
+				Defined :- Route::post('route_name', controller_name, function_name); 
+		3 :- put() :- This method is used for update the data. When we update the multiple data then we used this method. If want to used this method with form then we defined a hidden field inside the form and used this. But inside the form method we use only get/post methods. <input type="hidden" name="_method" value="put">
+				Defined :- Route::put('route_name', controller_name, function_name); 
+		4 :- patch() :-  This method is used for update the data. When we update the spacific data then we used this method. If want to used this method with form then we defined a hidden field inside the form and used this. But inside the form method we use only get/post methods.
+				Defined :- Route::patch('route_name', controller_name, function_name); 
+		5 :- delete() :- Delete the data or row form database.
+				Defined :- Route::delete('route_name', controller_name, function_name);
+		6 :- option() :- This method is run by browser to check sending url is avaliable or not. But this not define by developer's.
+		7 :- view() :- When we load the view form view folder. To get directly access the view by this method.
+
+3 :- Make form for the use of route method?
+Ans :-
+
+4 :- Example all the route method?
+Ans :-
+
+5 :- Interview questions?
+
+Part :- 34 Route any and match founction
+
+1 :- Use of any and match function?
+Ans :- Any :- With help of any method. We create a single route for the multiple route.
+	Example :- get,post,update,delete all the method is working with the any method.
+
+2 :- Example of any function?
+Ans :- 	1 :- Route::get('userFormValidation',[UserController::class,'any']);
+		2 :- Route::post('userFormValidation',[UserController::class,'any']);
+		3 :- Route::update('userFormValidation',[UserController::class,'any']);
+		4 :- Route::delete('userFormValidation',[UserController::class,'any']);
+
+		Example of any method :- This called single method to all the routes.
+		Route::any('url_name',[controller_name::class,'function_name']);
+
+3 :- Example of match function?
+Ans :- Match function run the spacific function we defined inside the match function like get,post etc.
+		Example :- 	Route::match([method_names],'url_name', [controller_name,'function_name']);
+					Route::match(['get','post'],'/user', ,[UserController::class,'any']);
+4 :- Interview questions?
+
+Part :- 35 Laravel HTTP Request class.
+1 :- What is Http Request class?
+Ans :- This is provide the data or request inside the are controller. Like we get the any page, form data etc.
+
+2 :- Make a html form and send request to controller?
+Ans :-
+
+3 :- Get request data?
+Ans :- 	Using request we get the data.
+		function login(Request $req){
+			return $req; 
+		}
+
+4 :- Get path, method, url, full url?
+Ans :- 
+	function login(Request $req){
+        echo "Request method is ".$req->method()."<br>"; // Check the which method is used.
+        echo "Path is ".$req->path()."<br>"; // Check the path.
+        echo "Url is ".$req->url()."<br>"; // Check the url.
+        echo "Get Input is ".$req->input("name")."<br>"; // Get Input value. $req->name
+        print_r($req->input()); // Get all Input value
+        print_r($req->collect()); // Get all collect value. Collect return the value in object form
+		
+		if($req->isMethod('post')){
+			echo "Post method";
+		}
+    }
+        
+5 :- Check path method?
+Ans :- 	$req->is check the path
+		if($req->is('user_form')){
+			echo "User path";
+		}
+6 :- Get IP of request?
+Ans :- echo "Check the IP ". $req->ip();
+
+7 :- Interview questions?
+
+Part :- 36 Laravel sessions
+
+1 :- What is session?
+Ans :- A session is a way to store and access data across multiple pages of a website for a single page. Session store data in the server side. But manage with browser cookies.
+
+
+2 :- Make a login form route and controller?
+Ans :-
+
+3 :- Store data in session?
+Ans :- $request->session()->put('user', $request->user); // Store the data inside the session
+        //echo session('user'); // To get the data from session
+       /*  $request->session()->put('allData', $request->input()); // to get all data from form.
+        print_r(session('allData')); */
+
+4 :- Get a data in session?
+Ans :- {{session('user')}}
+
+5 :- Remove the data from session?
+Ans :- session()->pull('user'); // Destroye the session.
+
+6 :- Interview questions
+
+Part :- 37 Laravel flash Session
+
+1 :- What is flash session?
+Ans :- A session is a way to store data only once. After refresh or anything route request data will be remove from flash session. This is basically used for display error and success message.
+
+2 :- Make a html form route and controller?
+Ans :-
+
+3 :- Store the data in the flash session?
+Ans :- $request->session()->flash('message', 'User add successfully');
+
+4 :- Display data from the session?
+Ans :- 	{{session('message')}}
+		{{session()->reflash()}} <!-- To hold the session message -->
+		{{session()->keep(['name'])}} <!-- To hold the spacific session message with keep() function -->
+   
+
+5 :- Interview questions?
+Ans :- 
+
+Part :- 38 Upload and display file.
+1 :- Make a small form to select a file?
+Ans :-
+
+2 :- Make controller for upload file?
+Ans :-
+		2 :- If your public folder is not public then run this command for public folder :- php artisan storage:link
+
+3 :- Store file with autogenerated name?
+Ans :- 	$fileNameArray = explode('/',$path);
+        $fileName = $fileNameArray[1];
+
+4 :- Store file with the self provide name?
+Ans :-   $path = $request->file('file')->storeAs('public','image_name');
+
+5 :- Make upload file public?
+Ans :-  $path = $request->file('file')->store('public');
+
+6 :- Display file after upload?
+Ans :- <img src="{{url('storage/'.$paths)}}" width="50px" height="50px" alt="" srcset="">
+
+7 :- Interview questions?
+
+Part :- 39 Localization
+
+1 :- What is localization?
+Ans :- When we support the multiple language support in the project. That is called localization.
+
+2 :- Published localization in laravel?
+Ans :- 	Using this command we Published localization :- php artisan lang:publish
+		Then inside the laravel the lang folder is avaliable.
+
+3 :- Make a localization folder and file?
+Ans :- Goto the lang folder and make a language folder like 'hi' this mean's hindi language folder.
+
+4 :- Use localization in view?
+Ans :- 	Inside the view file.
+		{{__('welcome.heading1')}}
+		{{__('filename.key_name)}}
+		After that goto the env file and change 'en' to 'hi'. This mean's language folder is changed english to hindi.
+		APP_LOCALE=en to APP_LOCALE=hi
+		
+
+5 :- Change default localization?
+Ans :- 	After that goto the env file and change 'en' to 'hi'. This mean's language folder 
+		is changed english to hindi.
+		APP_LOCALE=en to APP_LOCALE=hi
+
+6 :- Change localization for spacific route?
+Ans :- 	Goto the web.php file and set language for spacific root.
+		Route::get('localization_about1/{lang}', function($lang){
+			App::setLocale($lang);
+			return view('aboutLocalization');
+		});
+
+7 :- Interview questions?
+
+Part :- 40 Localization Part 2
+1:- Pass param to localization?
+Ans :- 	1.Goto the folder lang -> welcome.php and "aboutName" => 'सभी को नमस्कार, यह है :name, आप कैसे हैं'
+		:name is a parameter name.
+
+2 :- Set localization by user?
+	2.1 :- Makemiddleware.
+			Create a middleware :- SetLang.php
+			Add this code :- 
+							if($request->session()->get('lang')){
+								\App::setLocale($request->session()->get('lang'));
+							}
+	2.2 :- Set lang to session.
+		Goto the app.php file and set the session with middleware :-
+			$middleware->appendToGroup('setLang',SetLang::class);
+	2.3 :- Upload lang with middleware.
+			Goto the web.php file :-
+				Route::middleware('setLang')->group(function(){
+					Route::get('/', function () {
+						return view('welcome');
+					});
+					Route::get('setLang/{lang}',function($lang){
+						//return $lang;
+						Session::put('lang',$lang);
+						return redirect('/');
+					});
+				});
+			
+			Set the anchor tage in welcome.blade.php file
+			<H3>Choose your language</H3>
+			<a href="{{url('setLang/en')}}">Select English</a></br>
+			<a href="{{url('setLang/hi')}}">Select Hindi</a></br>
+			<a href="{{url('setLang/ko')}}">Select Korean</a></br>
+
+
+			<h1>{{__('welcome.aboutName',["name" => "Gurjeet Singh"])}}</h1></br> // Set the dynamic parameter with this :- ["name" => "Gurjeet Singh"].
+
+			Set the key in every language file in the folder lang -> welcome.php file
+			Example :- 'aboutName' => '안녕하세요 여러분, :name 입니다. 잘 지내세요?'
+3 :- Interview questions?
+
+Part :- 41 Insert data in Mysql DB table
+1 :- Set .env file config?
+Ans :-
+
+2 :- Make controller,model,view?
+Ans :-
+
+3 :- Make html file?
+Ans :-
+
+4 :- Create table in Mysql DB?
+Ans :-
+
+5 :- Store data in DB table?
+Ans :- 	controller file :- 
+		function addStudent(Request $request){
+			$student = new Student41;
+			$student->name = $request->name;
+			$student->email = $request->email;
+			$student->batch = $request->batch;
+			$student->save();
+			if($student){
+				return "Student Add successfully";
+			}else{
+				return "Something wrong";
+			}
+		}
+
+6 :- Interview questions?
+
+Part :- 42 Get and display data from DB.
+1 :- Make a view, route and controller function?
+Ans :-
+
+2 :- Fetch the data from the Mysql table?
+Ans :- $studentList = Student41::all();
+
+3 :- Display data on UI?
+Ans :- 	@foreach($studentdata as $student)
+			<tr>
+				<td>{{$student->id}}</td>
+				<td>{{$student->name}}</td>
+				<td>{{$student->phone}}</td>
+				<td>{{$student->batch}}</td>
+				<td>{{$student->created_at}}</td>
+			</tr>
+		@endforeach
+
+4 :- Interview questions?
+
+Part :- 43 Delete Data from mysql table
+
+1 :- Make delete option for a table?
+Ans :-  <td><a class="btn btn-danger" href="{{url('delete',$student->id)}}">Delete</a></td>
+
+2 :- Make a Route and controller function ?
+Ans :- 	Web.php :- Route::get('delete/{id}',[Student41Controller::class,'delete']);
+		Student41Controller.php :- 	function delete($id){
+										$isDeleted = Student41::destroy($id);
+										if($isDeleted){
+											return redirect()->back();
+										}
+									}
+3 :- Delete data from table?
+Ans :- function delete($id){
+        $isDeleted = Student41::destroy($id);
+        if($isDeleted){
+            return redirect()->back();
+        }
+    }
+
+4 :- Redirect after delete?
+Ans :- 	1 :- return redirect()->back();
+		2 :- return redirect('route_name');
+
+5 :- Interview questions?
+1 :- Who to delete the data?
+Ans :- Using a destroy() function we delete the records.
+
+Part :- 44 Populate data in input fields from mysql table.
+1 :- Make the edit option in the table?
+Ans :- <a class="btn btn-success" href="{{url('edit',$student->id)}}">Edit</a>
+
+2 :- Make the route and controller function?
+Ans :- Route::get('edit/{id}',[Student41Controller::class,'edit']);
+		Student41Controller.php :- 	function edit($id){
+										$data = Student41::find($id);
+										return view('student44Edit',['studentData' => $data]);
+										}
+3 :- Get data from mysql table with id?
+Ans :- function edit($id){
+						$data = Student41::find($id);
+						return view('student44Edit',['studentData' => $data]);
+						}
+
+4 :- Make a HTMl form?
+Ans :-  <h1>Student Data</h1>
+		<form action="" method="post">
+			<input type="text" name="name" id="" value="{{$studentData->name}}">
+			<input type="text" name="batch" id="" value="{{$studentData->batch}}">
+			<input type="submit" name="submit" id="">
+			<a href="">Cancel</a>
+		</form>
+
+5 :- Populate Data in input fields?
+Ans :-  <h1>Student Data</h1>
+		<form action="" method="post">
+			<input type="text" name="name" id="" value="{{$studentData->name}}">
+			<input type="text" name="batch" id="" value="{{$studentData->batch}}">
+			<input type="submit" name="submit" id="">
+			<a href="">Cancel</a>
+		</form>
+
+6 :- Interview questions.
+
+Part :- 45 Update data in mysql table.
+1 :- Make a put request?
+Ans :- 	<h1>Student Data</h1>
+		<form action="{{url('edit_student',$studentData->id)}}" method="post">
+			@csrf
+			<input type="hidden" name="_method" value="put">
+			<input type="text" name="name" id="" value="{{$studentData->name}}">
+			<input type="text" name="batch" id="" value="{{$studentData->batch}}">
+			<input type="submit" name="submit" id="">
+			<a href="">Cancel</a>
+		</form>
+
+2 :- Make the route and controller function?
+Ans :- 	Route::put('edit_student/{id}',[Student41Controller::class,'editStudent']);
+		function editStudent(Request $request, $id){
+			$student = Student41::find($id);
+			$student->name = $request->name;
+			$student->batch = $request->batch;
+			$updateRec = $student->save();
+			if($updateRec){
+				return redirect('listStudent42');
+			}else{
+				return "Update operation failed";
+			}
+		}
+3 :- Update data in mysql table?
+Ans :-	function editStudent(Request $request, $id){
+			$student = Student41::find($id);
+			$student->name = $request->name;
+			$student->batch = $request->batch;
+			$updateRec = $student->save();
+			if($updateRec){
+				return redirect('listStudent42');
+			}else{
+				return "Update operation failed";
+			}
+		}
+
+4 :- Interview questions?
+
+Part :- 46 Search in mysql table.
+
+1 :- Make a search form?
+Ans :- <form action="{{url('search')}}" method="get">
+        <input type="text" name="search" value="{{@$serach}}"placeholder="Search students" id="">
+        <button>Search</button>
+    </form>
+	// @ is add because if the variable is not defined then error is not appear.
+
+2 :- Make a Route and controller function?
+Ans :- Route::get('search',[Student41Controller::class,'search']);
+
+3 :- Search and display Data?
+Ans :- 	function search(Request $request){
+			$studentList = Student41::where('name','like',"%$request->search%")->get();
+			return view('listStudent42',['studentdata'=>$studentList,'serach' => $request->search]);
+		}
+
+4 :- Interview questions.
+
+Part :- 47 Pagination with mysql data list.
+1 :- Apply pagination with database result?
+Ans :- function list(){
+        //$studentList = Student41::all();
+        $studentList = Student41::paginate(3);
+        return view('listStudent42',['studentdata'=>$studentList]);
+    }
+
+2 :- Apply pagination link?
+Ans :- view page :- {{$studentdata->links()}}
+
+3 :- Apply style?
+Ans :- <style>
+        .w-5,.h-5{
+            width: 20px;
+        }
+    </style>
+
+4 :- Interview questions.
+
+Part 48 :- Delete multiple records with mysql
+1 :- Make a checkbox with each row?
+Ans :- <td><input type="checkbox" name="ids[]" id="" value="{{$student->id}}" /></td>
+
+2 :- Make form and delete button?
+Ans :- <form action="delete_multi" method="post">
+        @csrf
+        <button>Delete</button><br />
+		<td><input type="checkbox" name="ids[]" id="" value="{{$student->id}}" /></td>
+		</form>
+3 :- Make route and controller function?
+Ans :-  function deleteMultiple(Request $request){
+			$student = Student41::destroy($request->ids);
+			if($student){
+				return redirect('listStudent42');
+			}else{
+				return "Student data not deleted";
+			}
+		}
+		/* Part 48 */
+		Route::post('delete_multi',[Student41Controller::class,'deleteMultiple']);
+
+4 :- Delete records?
+Ans :-
+
+5 :- Interview questions?
+Ans :- 
+
+49 :- Upload and display image with database
+1 :- Make a database table?
+Ans :- 	1 :- php artisan make:migration create_images_table
+		2 :-  public function up(): void
+				{
+					Schema::create('images', function (Blueprint $table) {
+						$table->id();
+						$table->string('path');
+						$table->timestamps();
+					});
+				}
+		3 :- php artisan migrate
+
+2 :- Make view, controller, model, route?
+Ans :- upload49.blade.php, image49.blade.php, ImageController.php, Image.php
+3 :- Upload image?
+Ans :- 	php artisan storage:link
+		public function upload(Request $request){
+			$path = $request->file('file')->store('public');
+			$pathArray = explode('/',$path);
+			$imagePath = $pathArray[1];
+			$imageModel = new Image;
+			$imageModel->path = $imagePath;
+			if($imageModel->save()){
+				return redirect('imageList49');
+			}else{
+				return "Image not uploaded";
+			}
+		}
+4 :- Store image path with db?
+Ans :-
+5 :- Display images?
+Ans :- 	public function list(){
+			$images = Image::all();
+			return view('display49',['images' => $images]);
+		}
+		display49.blade.php
+		<img src="{{url('storage/'.$image->path)}}" width="100px" height="100px" alt="" srcset="">
+6 :- Interview questions?
+
+50 :- Building layout with component?
+
+1 :- What is layout?
+Ans :- Layout out is common template for reuse code. reuse common UI. reuse style. and similar look and feel.
+2 :- Make home and about page?
+Ans :- homeComponent.blade.php, aboutComponent.blade.php
+3 :- Make component for layout?
+Ans :- php artisan make:component layout
+4 :- Make layout with component?
+Ans :-  <x-component-name>
+		<x-slot name="slot-name">
+		<x-layout>
+			<!-- Declarad Upslot -->
+			<x-slot name="title">About Page</x-slot>
+			<x-slot name="main">
+			<div>
+				<h1>About Page heading</h1>
+				<h3>Sub heading for About page</h3>
+				<p>Dummp paragraph text for About page</p>
+			</div>
+			</x-slot>
+		</x-layout>
+
+		// Use slot inside the component page 
+		{{$slot-name}}
+5 :- Test and disscuse interview questions?
+Ans :-
+
+Part 51 :- Use css and JS
+1 :- Write css and Js?
+Ans :- style.css :- .heading{
+						color : red;
+					}
+					.clr-red{
+						color: red;
+					}
+		custom.js :- function changeColor(){
+						document.getElementById('clr-red').style.color = "Green";
+					}
+
+2 :- Use css and Js in view?
+Ans :- 	<link rel="stylesheet" href="{{asset('css/style.css')}}">
+		<script src="{{asset('js/custom.js')}}"></script>
+
+3 :- Use css and js with layout?
+Ans :-
+
+4 :- Use internal css and js?
+Ans :-
+
+5 :- Asset method for add css and Js?
+Ans :-
+
+6 :- Interview questions?
+
+Part 52 :- Layouts using  template inheritance.
+1 :- Make layout?
+Ans :-
+
+2 :- Add common code in layout?
+Ans :- layout52.blade.php
+
+3 :- Pass dynamic data page to layout?
+Ans :- @section('variable_name) :- Send the data into the layout page.
+		@yield :- To show the data inside the layout page.
+		@section('variable_name) @show :- With these two function. We show the data inside the layout page.
+
+4 :- Use common style with layout?
+Ans :-
+
+5 :- Use bootstrap with layout?
+Ans :-
+
+6 :- Disscus interview questions.
+
+Part 53 :- Stub customization.
+1 :- Why use stub?
+Ans :- Stub :- Basically scalten file. When we create a controller, view, model file. Then some common code is automatically written inside the file that code is already definied inside the stub file. Suppose we create a common function is used inside the every file. Then we declarad a code inside the stub and when we create any controller, view, model with make command this code is automatically defined inside the file.
+So first we astabilzed the stub inside the project :-
+	Command :- php artisan stub:publish
+
+2 :- Run Command?
+Ans :- Command :- php artisan stub:publish
+		This command automatically generate the stub folder and inside this controller, model, view etc file are created. And we change in this file like controller common code. And this code is automatically defined when we create new controller.
+
+3 :- Customize controller?
+Ans :-
+
+4 :- Customize model?
+Ans :-
+
+5 :- Interview questions.
+
+Part 54 :- Migration in Laravel
+1 :- What is migration?
+Ans :- 	With work in laravel we don't need any table create mannuly. All this do with migration. 
+
+
+2 :- Make a table with migration?
+Ans :- php artisan make:migration create_tableName_table
+		This file is avaliable inside the data > migration folder.
+
+3 :- Write code for column field?
+Ans :- 	public function up(){
+			Schema::create('table_name', function(Blueprint $table){
+				$table->id();
+				// Add new fields.
+				$table->string('name');
+				$table->string('email');
+				$table->timestamps();
+				
+			})
+		}
+
+4 :- Migrate database?
+Ans :- Command for include the table inside the database :- php artisan migrate
+
+5 :- Interview questions.
+
+Part 55 :- Migration important command.
+1 :- How to reset migration?
+Ans :- Reset is remove all the migration table that was created by migration.
+		Command :- php artisan migrate:reset
+
+2 :- Rollback migration?
+Ans :- Rollback :- That mean's remove the spacific file. If we run simple rollback that remove the only last migration. It's count last migration.
+		Command :- php artisan migrate:rollback
+
+3 :- Rollback steps, Refresh?
+Ans :- 1 :- Rollback steps :- Remove the spacific migration like remove the last two migration.
+		Command :- php artisan migrate:rollback --step 2
+	2 :- Refresh :- Suppose we migrate some migration and remove some migration. Refresh rollback all the migration and run again all migrations.
+	Command :- php artisan migrate:refresh
+
+4 :- Single file migration?
+Ans :- Command :- php artisan migrate --path=/database/migrations/migrationFilename
+		Example :- php artisan migrate --path=/database/migrations/2024_07_16_070350_create_images_table.php
+5 :- Interview questions.
+
+
+Part 56 :- Seeding in laravel
+1 :- What is seeding?
+Ans :- Seeding mean's using laravel enter the dummy data.
+	
+2 :- How to generate seeder file?
+Ans :- 	Command :- php artisan make:seeder CustomSeederName
+				php artian make:seeder MembersSeeder
+		This file is created inside the database > seeder folder.
+
+3 :- Data seeding?
+Ans :- Goto the database > seeder > MembersSeeder.php file.
+	Add the data base Facades for database dummy data.
+	
+	use Illuminate\Support\Facades\DB;
+	use Illuminate\Support\Str;
+
+	public function run(): void
+    {
+        //
+        DB::table('members')->insert([
+            'name' => Str::random(10),
+            'email' => Str::random(10).'@email.com',
+            'address' => Str::random(10)
+        ]);
+    }
+
+4 :- Run seeder for database?
+Ans :- 	php artisan db:seed --class=SeederfileName
+		Example :- php artisan db:seed --class=MembersSeeder
+5 :- Interview question.
+1 :- How to seed the multiple table inside the database.
+
+Part 57 :- Laravel Maintenance Mode.
+1 :- What is maintenance mode.
+Ans :- When you work or some bugs on live application and you want tells the user's to the app is maintenance mode and after the some app is working normally.
+The Benifits is after the sometime app working properly.
+
+2 :- How to apply maintenance mode.
+Ans :- command :- php artisan down
+
+3 :- How to come out from maintenance mode.
+Ans :- Command :- php artisan up
+
+4 :- How to apply secret key with maintenance mode.
+Ans :- php artisan down --secret='keyName'
+	Example :- php artisan down --secret="gurjeet"
+
+5 :- Interview question.
+1 :- What is secret key?
+Ans :- Secret key is generated by developer and we how users access the app. How avaliable this key otherwise app on showing maintenance mode.
+Generate secret key :- php artisan down --secret="gurjeet"
+
+Part :- 58 Laravel Accessors.
+1 :- What is Accessors in laravel.
+Ans :- Accessors are method avaliable inside the laravel. It's writtin inside the model. The work is when we get the data from database. Then modify it.
+For example :- Get the name and name first letter is capital or get phone and show the phone number with country code etc. Changes effected the UI not database.
+
+2 :- Make model, controller and view.
+Ans :- 	Model :- php artisan make:model StudentsAccessors
+		Controller :- php artisan make:controller StudentAccessorsController
+3 :- Make 2 Accessors for example.
+Ans :- Model > StudentsAccessors
+	declared the function/method and after the get write the table column name (column first letter always capital) and after that Attribute.
+	Example :-  function getNameAttribute($val){ // Here is name is get from table.
+					return  ucfirst($val);
+				}
+
+				function getBatchAttribute($val){ // Here is name is get from table.
+					return  "+91 -".$val);
+				}
+	web.php 
+	Route::get('list',[StudentAccessorsController::class,'list']);
+
+4 :- Interview questions.
+
+Part 59 :- Laravel Mutators.
+1 :- What is Mutators in laravel.
+Ans :- Mutators is modify data when we insert into the database.
+
+2 :- Make controller function and route.
+Ans :- StudentAccessorsController.php
+
+3 :- Make 2 Mutators for example.
+Ans :- 	StudentAccessorsController.php
+		/* Mutators */
+		function save(){
+		$student = new StudentsAccessors();
+		$student->name = "Dell";
+		$student->batch = 1234;
+		$student->email = "Dell@demo.com";
+			if($student->save()){
+				echo "New record inserted";
+			}else{
+				echo "Plz try again";
+			}
+		}
+
+		StudentsAccessors.php (Model)
+
+		/* Mutators */
+		function setNameAttribute($val){
+			$this->attributes['name'] = ucfirst($val);
+		}
+
+		function setBatchAttribute($val){
+			$this->attributes['batch'] = 'batch-'.$val;
+		}
+
+		web.php
+		Route::get('save',[StudentAccessorsController::class, 'save']);
+4 :- Interview questions.
+
+
+Part 60 :- Laravel One to One relationship
+Table :- 
+		Sellers :- php artisan make:migration create_sellers_table
+		Products :- php artisan make:migration create_products_table
+		php artisan migrate.
+
+1 :- What is relationship.
+Ans :- 	In laravel relationship called Eloquent relationship. 
+		Eloquent relationship are a powerfull feature in laravel that allows developers to easily work with related data.
+
+		Eloquent relationships are a powerfull feature get data from more than one table with any related field.
+
+2 :- What is One to One relationship.
+Ans :- One to One relatinship is relate the first table single row with relate second table single row only. This is called one to one relation.
+
+3 :- Example
+Ans :- 	php artisan make:controller SellerController
+		php artisan make:model Seller
+		php artisan make:model Product
+
+		SellerController.php
+		function sellerlist(){
+			//return Seller::all();
+			return Seller::find(1)->productData; // Model -> function name
+		}
+
+		Seller.php (Model)
+		function productData(){
+			return $this->hasOne('App\Models\Product');
+			// If the column name is not same in product table then we add the column name inside the relation table
+			//return $this->hasOne('App\Models\Product','column_name');
+			return $this->hasOne('App\Models\Product','owner_id');
+		}
+
+		web.php
+		Route::get('sellerlist',[SellerController::class,'sellerlist']);
+4 :- Interview questions.
+
+Part :- 61 Laravel One to many relationship.
+1 :- What is one to many relationship?
+Ans :- When we make relationship with two table. Then first table row is connected with multiple rows of second table.
+
+2 :- Make function in model.
+Ans :-	Seller.php (Model)
+		function productManyData(){
+			return $this->hasMany('App\Models\Product');
+		}
+
+3 :- Example.
+Ans :-
+		SellerController.php
+		function manyRelList(){
+			return Seller::find(1)->productManyData;
+		}
+
+		Seller.php (Model)
+		function productManyData(){
+			return $this->hasMany('App\Models\Product');
+		}
+
+		web.php
+		Route::get('many-rel',[SellerController::class,'manyRelList']);
+4 :- Interview questions.
+
+Part :- 62 Laravel Many to one relationship. ( One to many (Inverse))
+1 :- What is Many to One relationship.
+Ans :- Second table multiple columns connect with the first table single columns. It mean's this is many to one relationship.
+
+2 :- Make function in model.
+Ans :- 	Product.php model
+		function seller(){
+			return $this->belongsTo('App\Models\Seller');
+		}
+
+3 :- Example.
+Ans :-
+		SellerController.php
+		function manyToOneRelList(){
+			//return Product::all();
+			$data = Product::with('seller')->get();
+			return $data;
+		}
+
+		Product.php model
+		function seller(){
+			return $this->belongsTo('App\Models\Seller');
+		}
+
+		web.php
+		Route::get('many-to-one',[SellerController::class,'manyToOneRelList']);
+
+4 :- Interview questions.
+
+Part :- 63 Send Email in Laravel.
+1 :- Make changes in Env file for mail config.
+Ans :- .env default code
+		MAIL_MAILER=log
+		MAIL_HOST=127.0.0.1
+		MAIL_PORT=2525
+		MAIL_USERNAME=null
+		MAIL_PASSWORD=null
+		MAIL_ENCRYPTION=null
+		MAIL_FROM_ADDRESS="hello@example.com"
+		MAIL_FROM_NAME="${APP_NAME}"
+
+		Changes
+
+		MAIL_MAILER=smtp
+		MAIL_HOST=smtp.gmail.com
+		MAIL_PORT=587
+		MAIL_USERNAME=gurjeetappin@gmail.com
+		MAIL_PASSWORD= sddsd12354 // Goto to gmail account and  goto app password option and create new app and generate password.
+		MAIL_ENCRYPTION=tls
+		MAIL_FROM_ADDRESS="gurjeetappin@gmail.com"
+		MAIL_FROM_NAME="${APP_NAME}"
+
+2 :- Generate app and password in gmail.
+Ans :- Goto to gmail account and  goto app password option and create new app and generate password.
+
+3 :- Make mail file.
+Ans :- cmd :- 	php artisan make:mail WelcomeEmail
+				php artisan make:controller MailController
+
+4 :- Make controller and route.
+Ans :- 	MailController.php
+		function sendEmail(){
+			$to = "gurjeetappin@gmail.com";
+			$msg = "Dummy mail";
+			$subject = "Laravel Tutorial";
+			Mail::to($to)->send(new WelcomeEmail($msg, $subject));
+			return "Welcome mail";
+		}
+
+		web.php
+		/* Part 63 */
+		Route::get('send-mail',[MailController::class,'sendEmail']);
+
+5 :- Make email template.
+Ans :- If you are send the get the message and subject from WelcomeEmail.php the goto the Mail >> WelcomeEmail.php.
+1 :- Import the message and subject.
+View > mail.blade.php :- php artisan make:view mail
+		{{ $msg }}
+6 :- Send and test email.
+Ans :- 	Mail >> WelcomeEmail.php
+
+		use Queueable, SerializesModels;
+		// Set the message and subject.
+		public $msg;
+		public $sub;
+		/**
+		* Create a new message instance.
+		*/
+		public function __construct($msg, $subject)
+		{
+			// Set the message and subject.
+			$this->msg = $msg;
+			$this->sub = $subject;
+
+		}
+
+		/**
+		* Get the message envelope.
+		*/
+		public function envelope(): Envelope
+		{
+			return new Envelope(
+				//subject: 'Welcome Email',
+				subject: $this->sub, // Set the subject name from MailController file.
+			);
+		}
+
+7 :- Interview questions.
+
+Part :- 64 Send email with HTML form.
+1 :- Make view file and route.
+Ans :- php artisan make:view send-email
+
+2 :- Make view form.
+Ans :- 	send-email.blade.php
+		<h1>Add Details for Send Email</h1>
+		<form action="send-mail" method="post">
+			@csrf
+			<input type="text" name="to" id="to" placeholder="Enter Email Address"><br /><br />
+			<input type="text" name="subject" id="subject" placeholder="Enter Email Subject"><br /><br />
+			<textarea name="msg" id="msg" cols="20" rows="5" placeholder="Enter Message"></textarea><br /><br />
+			<button>Send Email</button>
+
+		</form>
+
+3 :- Get data from view to controller.
+Ans :-	MailController.php
+		function sendEmail(Request $req){
+			$to = $req->to;
+			$msg = $req->msg;
+			$subject = $req->subject;
+			Mail::to($to)->send(new WelcomeEmail($msg, $subject));
+			return "Email send";
+		}
+
+		web.php
+		/* Part 64 */
+		Route::post('send-mail',[MailController::class,'sendEmail']);
+		Route::view('send-mail','send-email');
+4 :- Send and test mail.
+Ans :- 
+
+5 :- Interview questions.
+
+Part :- 65 Fluent string.
+1 :- What is Fluent string.
+Ans :- When we perform a operation onto the string for example :- We want to capitalized first letter of string. Then we asign the string multiple times into the variable.
+This operation are we perform with Fluent string with this we make a method chaining. And we don't need to asign value again and again.
+
+Fluent String :- Is string method chaining.
+
+2 :- Issues with previous string.
+Ans :- 	Previous string example :-
+			use Illuminate\Support\Str;
+			$info = "hi, let's learn laravel";
+			$info = Str::ucfirst($info);
+			$info = Str::replaceFirst("Hi","Hello",$info);
+			$info = Str::camel($info);
+			echo $info;
+	
+
+3 :- Understanding with example.
+Ans :- Fluent String example :- $info = Str::of($info)->ucfirst($info)->replaceFirst("Hi","Hello",$info)->camel($info);
+
+4 :- Interview questions.
+1 :- We combined the old and fluent string method?
+Ans :-
+
+Part :- 66 Route Model Binding.
+1 :- What is route model Binding.
+Ans :- Route model binding mean's route and model both are inject. Use minimum to minimum code for get the data from database.
+
+2 :- Make model and controller.
+Ans :- 	Model :- php artisan make:model Device
+		Controller :- php artisan make:controller DeviceController
+
+3 :- Understand with example.
+Ans :-	DeviceController.php
+		function index(Device $key){ // Add the model name like Device model and get the data from database.
+			//return $key->all(); // All data from database.
+			return $key;
+		}
+
+		web.php
+		/* Part 66 */
+		//Route::get('device/{key}',[DeviceController::class,'index']); // This is for id
+		Route::get('device/{key:name}',[DeviceController::class,'index']); // This is for column name
+
+4 :- Interview questions.
+1 :- We are get the data from multiple table using single route?
+Ans :-
+
+Part :- 67 Inline blade template
+1 :- What is blade template.
+Ans :- Blade template is engine in laravel. This embedded the laravel dynamic data with html.
+
+2 :- What is inline blade template.
+Ans :- If you want print a small information. Then we used the inline blade template. We use the blade template inside the controller.
+
+3 :- Example of inline blade template.
+Ans :- 	DeviceController.php
+		function inlineBldTmplte(){
+			$totalProduct = 20;
+			return Blade::render('{{ $total }} Total Product list',['total' => $totalProduct]);
+		}
+
+		/* Part 67 */
+		Route::get('inline-blade',[DeviceController::class,'inlineBldTmplte']);
+
+4 :- Use of inline blade template.
+Ans :- 
+
+Part :- 68 API in Laravel
+
+1 :- What is API?
+Ans :- Application Programming Interface is a way for share data between 2 technologies or 2 projects.
+
+	Why we need API :- UI technologies can not connect with Database. So UI technologies can get data with API.
+
+	One API can use multiple application like Air ticket booking etc.
+
+2 :- Use of API?
+Ans :-
+
+3 :- How API data look like?
+Ans :- API data look in JSON format and every technologies is easly handle the json format data. But in some old time we use XML for API data.
+
+4 :- Interview questions.
+
+Part :- 69 Install API Package.
+
+1 :- Create a new Laravel Application.
+Ans :- In laravel 11 we need to install the API package. In previous version API package is pre installed.
+
+2 :- Install API package.
+Ans :- 	Command :- php artisan install:api
+		In composer.json :- Sanctum package installed and this is  generate the token for API.
+
+3 :- Make route for API.
+Ans :- 	Goto routes > api.php
+		Route::get('/test', function(){
+			return ['name' => 'Harshdeep', 'age' => 13];
+		});
+
+4 :- Test API route.
+Ans :- http://localhost:8000/api/test
+
+5 :- Interview questions.
+
+Part :- 70 Make first API
+1 :- Database config in .env file.
+Ans :- Set the database detail inside the .env file.
+
+2 :- Make Controller and Model.
+Ans :- 	Controller :- php artisan make:controller StudentApiController
+		Model :- php artisan make:model Students_apis 
+3 :- Get the data from Database.
+Ans :- StudentApiController.php :- 	
+									use App\Models\Students_apis;
+									function list(){
+										return Students_apis::all();
+									}
+
+4 :- Test API.
+Ans :- http://localhost:8000/api/students
+
+5 :- Type of method in API.
+Ans :- 	1 Get
+		2 Post
+		3 Put/patch
+		4 Delete
+
+6 :- Interview questions.
+
+Part :- 71 Test API with Thunder Client in VS code.
+
+1 :- Why need to test API.
+Ans :- When we create api then we use it. Suppose we create api and this is not working properly. Then better we test api before integration.
+
+2 :- Install the Thunder client extension.
+Ans :- Goto the VS code extension section and serach the thunder client. And install it.
+
+3 :- Understand the basics of Thunder client.
+Ans :- Thunder client use for test the APIs. It's working like a postman.
+
+4 :- Test Get API.
+Ans :- Goto the thunder client and past the url inside url section and set the data type like GET/POST etc.
+	Url :- http://localhost:8000/api/students
+
+5 :- Test POST API.
+Ans :-
+
+6 :- Interview questions.
+
+Part :- 72 Make API with Post method.
+
+1 :- Make function and route.
+Ans :- 	/* Part :- 71 Thorey part */
+		Route::post('add-student',[StudentApiController::class,'addStudent']);
+
+2 :- Write code for API.
+Ans :- StudentApiController.php
+			function addStudent(Request $req){
+				$student = new Students_apis();
+				$student->name = $req->name;
+				$student->email = $req->email;
+				$student->batch = $req->batch;
+				if($student->save()){
+					return [
+						"result" => "Student add succssfully"
+					];
+				}else{
+					return [
+						"result" => "Try again"
+					];
+				}
+			}
+
+3 :- Test Post API.
+Ans :- Thunder client :- 
+		Url :- http://localhost:8000/api/add-student
+		Body :- Json Data 
+				{
+					"name":"Deep",
+					"email":"deep@demo.com",
+					"batch":"4rd"
+				}
+
+4 :- Test database table data.
+Ans :- http://localhost:8000/api/add-student
+
+Part :- 73 Make API with Put method (Update data).
+
+1 :- Make function and route.
+Ans :- 	api.php
+		/* Part :- 73 */
+		Route::put('update-student',[StudentApiController::class,'updateStudent']);
+
+2 :- Write code for API.
+Ans :- 	StudentApiController.php
+
+		function updateStudent(Request $request){
+			$student = Students_apis::find($request->id);
+			$student->name = $request->name;
+			$student->email = $request->email;
+			$student->batch = $request->batch;
+			if($student->save()){
+				return [
+					'result' => 'Data updated successfully'
+				];
+			}else{
+				return [
+					'result' => 'Data not updated'
+				];
+			}
+		}
+
+3 :- Test PUT api.
+Ans :- Thunder client :- 	Method :- PUT
+						 	Url 	:- http://localhost:8000/api/update-student
+
+4 :- Test database table data.
+Ans :- http://localhost:8000/api/add-student
+
+Part :- 74 Make API with Delete method.
+
+1 :- Make function and route.
+Ans :- 	/* Part :- 74 */
+		Route::delete('delete-student/{id}',[StudentApiController::class,'deleteStudent']);
+
+2 :- Write a code for delete API.
+Ans :- 	StudentApiController.php
+		function deleteStudent($id){
+			$student = Students_apis::destroy($id);
+			if($student){
+				return [
+					'result' => 'Record Deleted successfully'
+				];
+			}else{
+				return [
+					'result' => 'Try again'
+				];
+			}
+		}
+
+3 :- Test API.
+Ans :- Thunder client :- 	Method :- DELETE
+						 	Url 	:- http://localhost:8000/api/delete-student/9
+
+4 :- Test database table data.
+Ans :-  http://localhost:8000/api/add-student
+
+Part :- 75 Make API for serach.
+
+1 :- Make function and define route.
+Ans :- 	api.php
+		/* Part :- 75 */
+		Route::get('search-student/{name}',[StudentApiController::class,'searchStudent']);
+
+2 :- Write a code for Serach data API.
+Ans :- 	StudentApiController.php
+		function searchStudent($name){
+			$student = Students_apis::where('name','like',"%$name%")->get();
+			if($student){
+				return ['result' => $student];
+			}else{
+				return ['result' => 'record not found'];
+			}
+		}
+
+3 :- Test API.
+Ans :- http://localhost:8000/api/search-student/h
+
+4 :- Verify result with database table data.
+Ans :-
+
+Part :- 76 Validate API.
+
+1 :- Import Validation class.
+Ans :- use Illuminate\Support\Facades\Validator;
+ 
+2 :- Apply validation for add student API.
+Ans:- 	
+		api.php
+		/* Part :- 76 */
+		Route::post('add-student',[StudentApiController::class,'addStudent']);
+
+		StudentApiController.php
+		function addStudent(Request $req)
+		{
+
+			$rules = [
+				'name' => 'required|min:2|max:10',
+				'email' => 'email|required',
+				'batch' => 'required'
+			];
+			$validation = Validator::make($req->all(), $rules);
+			if ($validation->fails()) {
+				return $validation->errors();
+			} else {
+				$student = new Students_apis();
+				$student->name = $req->name;
+				$student->email = $req->email;
+				$student->batch = $req->batch;
+				if ($student->save()) {
+					return [
+						"result" => "Student add succssfully"
+					];
+				} else {
+					return [
+						"result" => "Try again"
+					];
+				}
+			}
+		}
+
+3 :- Test API.
+Ans :- 	http://localhost:8000/api/add-student
+		json data :- 	{
+							"name" : "Kumar",
+							"email" : "kumar@demo.com",
+							"batch" : "43batch"
+						}
+
+4 :- Verify the result with database table data.
+
+Part :- 77 API with Resource controller.
+
+1 :- What is resource controller.
+Ans :- Resource controller is laravel feature. When we are create controller in laravel. We add a resource flage with controller. With this crud operation functions are automatically created. Crud operation functions is ( Create, Read, Delete, Update ). And we don't need to define route with this. Only create a One route and all the functions are automatically run.
+
+2 :- Make controller with resource.
+Ans :- 	Command :- php artisan make:controller MemberController --resource
+		if you are change the function name then. we need to create a new route.
+
+3 :- Make Routes.
+Ans :- 	/* Part :- 77 */
+		Route::resource('member', [MemberController::class]);
+
+4 :-Test API.
+Ans :- 
+		1 .If you are use store then simple use the POST method :- http://localhost:8000/api/member
+
+		2 .If you are use update then simple use the PUT method :- http://localhost:8000/api/member/id
+
+		3 .If you are use delete then simple use the DELETE method :- http://localhost:8000/api/member/id
+
+		4 .If you are use index then simple use the GET method :- http://localhost:8000/api/member/
+
+		5 .If you are use create then simple use the POST method :- http://localhost:8000/api/member/create
+
+
+Part :- 78 API signup with laravel Sanctum.
+
+1 :- Install laravel API.
+Ans :- Sanctum :- Sanctum is a package that use with laravel for generate token.
+		Whey we generate token :- We have a project and there is multiple api is created. And someone is hit the api like create product, delete, update etc. So how we handle this situation. When the user is login or signup that time we create token. This token is in incrrupted. If api is hit with that token then we allow the user to perform a operation like create product, delete, update etc. If token is not avaliable then we not perform any operation.
+		This token is avaliable with login and signup api.
+		Command :- php artisan install:api
+
+2 :- Migrate table.
+Ans :- Command :- php artisan migrate.
+
+3 :- Make controller.
+Ans :- php artisan make:controller UserAuthController
+ 
+4 :- Update user model.
+Ans :- 	Model >> user.php :-
+		/* Call Santum package */
+		use Laravel\Sanctum\HasApiTokens;
+
+		class User extends Authenticatable
+		{
+			use HasFactory, Notifiable, HasApiTokens;
+		}
+
+5 :- Define route.
+Ans :- 	api.php
+		/* Part :- 78 */
+		Route::post('signup',[UserAuthController::class,'signup']);
+		Route::post('login',[UserAuthController::class,'login']);
+
+6 :- Write code for signup.
+Ans :- 	UserAuthController.php
+		function signup(Request $request){
+			$input = $request->all();
+			$input['password'] = bcrypt($input['password']);
+			$user = User::create($input);
+			$success['token'] = $user->createToken('MyApp')->plainTextToken; // This is make token. We add any type of text and this text is converted into the token.
+			$user['name'] = $user->name;
+			return [
+				'success' => true,
+				'result' => $success,
+				'message' => 'User Register successfully.'
+			];
+		}
+
+7 :- Test API and check token.
+Ans :- http://localhost:8000/api/signup
+
+Part :- 79 Login API with laravel sanctum package.
+
+1 :- Make login function and route for login API.
+Ans :- 	/* Part :- 79 */
+		Route::post('login',[UserAuthController::class,'login']);
+
+2 :- Write code for login.
+Ans :- 	UserAuthController.php
+		function login(Request $request){
+			$user = User::where('email',$request->email)->first();
+			if(!$user || !Hash::check($request->password,$user->password)){
+					return [
+						'result' => 'user not found',
+						'success' => false,
+						'password' => $user->password
+					];
+			}
+			$success['token'] = $user->createToken('MyApp')->plainTextToken;
+			$success['name'] = $user->name;
+
+			return [
+				'result' => $success,
+				'message' => 'User login successfully.'
+			];
+		}
+
+
+3 :- Test API and check token.
+Ans :- http://localhost:8000/api/login
+
+Part :- 80 API authentication with laravel sanctum.
+
+1 :- Apply sanctum middleware for route.
+Ans :- api.php
+
+	/* Part :- 80 Sanctum Middleware Authentication */
+	Route::group(["middleware" => "auth:sanctum"], function(){
+		Route::get('students', [StudentApiController::class,'list']);
+		Route::post('add-student',[StudentApiController::class,'addStudent']);
+		Route::put('update-student',[StudentApiController::class,'updateStudent']);
+		Route::delete('delete-student/{id}',[StudentApiController::class,'deleteStudent']);
+		Route::get('search-student/{name}',[StudentApiController::class,'searchStudent']);
+	});
+
+	/* If token is not found then redirect to the login route */
+	Route::get('login',[UserAuthController::class,'login'])->name('login');
+
+
+2 :- Send token with API.
+Ans :- Goto user api in postman.
+		1. Header section add :- Authentication : Bearer token_value ( That is avaliable inside the login api)
+
+3 :- Test API and check token.
+Ans :- http://localhost:8000/api/students
+
+Part :- 81 Install laravel with herd 
+
+1 :- What is herd.
+Ans :- This is a laravel tool. When install laravel install before we install some software's like PHP, Composer, Laravel global package. This type of software automatically install with herd and project is also installed automatically with herd tool.
+
+2 :- Install herd.
+Ans :- Download the herd form laravel offical website. Install and check the some softwares
+		1. Goto CMD :- Check composer. Command :- 1.1 composer. 1.2 php -v. 1.3 laravel -v
+
+3 :- Install laravel project.
+Ans :- Goto herd open site section >> laravel project >> No starter kit (for begnieer) >> project name
+
+4 :- Test installed project.
+Ans :- 
+
+5 :- Make changes in file.
+Ans :- Goto the herd folder where is exists and open it into the VS code.
+
+
+6 :- Interview questions.
+1 :- What is herd tool.
+
+2 :- Which software are install using herd tool.
+Ans :- PHP, Composer, laravel, Node.
+
+3 :- Can we install Mysql with herd.
+Ans :- Mysql is avaliable in paid version.
+
+4 :- Disadvantages.
+Ans :- Mysql is avaliable in paid version. this Disadvantages of herd.
+
+Part :- 82 Laravel 11 new feature.
+
+1 :- Simple project structure.
+Ans :- Many file and folder are remove from laravel 11 project structure. laravel 11 faster and bit faster.
+	Example :-
+	Optional API :- By default API feature is not avaliable in laravel 11. Need to run the command.
+	Command :- php artisan install:api
+	Because laravel team is relized the developer don't use the laravel for API. Developer is use another framework "lomack".
+2 :- Optional API feature.
+Ans :- 
+3 :- Default database update.
+Ans :- Laravel 11 has Sqlite as default database.
+4 :- Laravel reverb.
+Ans :- Reverb WebSocket server for laravel applications, bringing real-time commnucation between client and server. This is a package of laravel that need to install.
+Forexamle :- Chat, real time commnucation.
+5 :- Dumpable new feature.
+Ans :- If you use laravel before then you notice in laravel dd(), dump(). You can check where the code is break, debug, print easy perform. This feature is already exists. 
+Suppose you have day, minute, second and you want to check what is print. Then use the dump() function.
+Example :- $time = Carbon::now()->addDay()->dump()->addMinute()->dump()->addSecond()
+6 :- Health check.
+Ans :- 	Url :- http://localhost:8000/up
+		This route url tell application is running or not properly.
+
+The Once functions :- The once helper function executes the given rollback and caches the result.
+Suppose we have big function and it's runinng again and again. So we have caches the function and it will return result from caches not run again.
+7 :- New artisan command.
+Ans :- 	1. php artisan make:class className
+		2. php artisan make:enum
+		3. php artisan make:interface
+		4. php artisan make:trait
+8 :- Inspecting database and improved schema operations.
+Ans :- 	1. $table = Schema::getTables();
+		 2. $view = Schema::getViews();
+		 3. $columns = Schema::getcolumns('users'); // Schema::getcolumns('table_name');
+		 4. $columns = Schema::getIndexes('users');
+		 5. $columns = Schema::getForeignKeys('users');
+9 :- Pre-second rate limiting.
+Ans :- 	We have set the request. Suppose we set the request for spacific IP or user.
+		In this case sometime IP or user send the 1000 of  request at a time then we used this feature.
+
+		Example :- RateLimiter::for('invoices', function(Request $request){
+			return Limit::perSecond(1)
+		})
+
+Part :- 83, 84 are user questions and answers. So this is not part of laravel 11 tutorial.
+		
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
